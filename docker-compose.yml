@@ -1,0 +1,39 @@
+version: "3.8"
+services:
+
+  timescaledb:
+    image: timescale/timescaledb:latest-pg15
+    environment:
+      POSTGRES_USER: stocks
+      POSTGRES_PASSWORD: stocks
+      POSTGRES_DB: stocks
+    volumes:
+      - timescale_data:/var/lib/postgresql/data
+      - ./init-db:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+
+  poller:
+    build: ./poller
+    depends_on:
+      - timescaledb
+    environment:
+      DB_HOST: timescaledb
+      DB_USER: stocks
+      DB_PASSWORD: stocks
+      DB_NAME: stocks
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    depends_on:
+      - timescaledb
+
+volumes:
+  timescale_data:
+  grafana_data:
