@@ -1,0 +1,9 @@
+apiVersion: 1
+
+providers:
+  - name: Default
+    type: file
+    updateIntervalSeconds: 30   # Grafana re-reads the folder every 30s
+    options:
+      path: /etc/grafana/provisioning/dashboards
+      foldersFromFilesStructure: true

@@ -1,0 +1,16 @@
+apiVersion: 1
+
+datasources:
+  - name: TimescaleDB
+    type: postgres
+    uid: timescaledb-uid
+    url: timescaledb:5432
+    database: stocks          # ← this is the field Grafana is complaining about
+    user: stocks
+    secureJsonData:
+      password: stocks
+    jsonData:
+      sslmode: disable
+      timescaledb: true
+      postgresVersion: 1500
+    isDefault: true

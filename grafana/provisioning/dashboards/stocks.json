@@ -1,0 +1,23 @@
+{
+  "title": "Stock Dashboard",
+  "uid": "stocks-main",
+  "schemaVersion": 38,
+  "version": 1,
+  "refresh": "5m",
+  "time": { "from": "now-6M", "to": "now" },
+  "templating": {
+    "list": [
+      {
+        "name": "ticker",
+        "type": "query",
+        "datasource": { "type": "postgres", "uid": "timescaledb-uid" },
+        "query": "SELECT DISTINCT ticker FROM companies ORDER BY ticker",
+        "refresh": 1,
+        "includeAll": true,
+        "multi": false,
+        "current": { "text": "AAPL", "value": "AAPL" }
+      }
+    ]
+  },
+  "panels": []
+}
